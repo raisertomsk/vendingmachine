@@ -1,5 +1,7 @@
 # Vending Machine
 
+This is vending machine backend with JSON REST API.
+
 ## To run
 
 1. clone repository
@@ -9,8 +11,6 @@
 
 Configuration option -c sets up a configuration file path.
 As default it is ./config.json.
-
-This is vending machine backend with JSON REST API.
 
 ## The user-side algorithm:
 
