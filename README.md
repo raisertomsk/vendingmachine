@@ -1,47 +1,59 @@
 # Vending Machine
 
+## To run
+
+1. clone repository
+1. go get github.com/julienschmidt/httprouter
+2. go build
+3. ./vendingmachine
+
+Configuration option -c sets up a configuration file path.
+As default it is ./config.json.
+
 This is vending machine backend with JSON REST API.
 
 ## The user-side algorithm:
 
-### 1. Ask for a list of available products
+### 1. Ask for a list of available to buy products
 
-URL: http://host/list
+URL: GET http://host/list
+
+`curl -XGET http://localhost:12345/list`
 
 Response:
 
 ```json
 {
-    "products": {
-        "product1": {
-            "name": "Product 1",
-            "quantity": 2,
-            "price": 50
-        },
-        "product2": {
-            "name": "Product 2",
-            "quantity": 5,
-            "price": 12.5
-        },
-        ...
-        "productN": {
-            "name": "Product X",
-            "quantity": 8,
-            "price": 48
-        }
+    "product1": {
+        "title": "Product 1",
+        "quantity": 2,
+        "price": 50
+    },
+    "product2": {
+        "title": "Product 2",
+        "quantity": 5,
+        "price": 12.5
+    },
+    ...
+    "productN": {
+        "title": "Product X",
+        "quantity": 8,
+        "price": 48
     }
 }
 ```
 
-### 2. Make payment for a product:
+### 2. To buy a product:
 
-URL: http://host/get
+URL: http://host/get/:name
+
+`curl -XGET http://localhost:12345/get/product1`
 
 ```json
 {
-    "product": "productX",
+    "title": "product X",
     "quantity": 2,
-    "payment": 100
+    "price": 100
 }
 ```
 
@@ -49,27 +61,18 @@ Response OK:
 
 ```json
 {
-    "error": false,
+    "error_code": 0,
     "change": 22
 }
 ```
-
-Response wrong payment:
-
-```json
-{
-    "error": true,
-    "error_text": "Insufficient funds",
-    "cash_back": 100
-}
-```
+change can be omitted
 
 Response wrong quantity:
 
 ```json
 {
-    "error": true,
-    "error_text": "Wrong quantity",
+    "error_code": number,
+    "error_text": "Error description",
     "cash_back": 50
 }
 ```
@@ -78,27 +81,29 @@ Response wrong quantity:
 
 ### 1. Add a product
 
-URL: http://host/add
+URL: http://host/add/:name
+
+`curl -XPUT http://localhost:12345/add/product1`
 
 ```json
 {
-    "name": "product123",
-    "full_name": "Product 123",
+    "title": "Product 123",
     "quantity": 10,
     "price": 20
 }
 ```
 
-Fields quantity and price may be skipped.
+Fields quantity and price may be omitted.
 
 ### 2. Update a product
 
-URL: http://host/update
+URL: http://host/update/:name
+
+`curl -XPOST http://localhost:12345/update/product1`
 
 ```json
 {
-    "name": "product123",
-    "full_name": "Product 123",
+    "title": "Product 123",
     "quantity": 10,
     "price": 20
 }
@@ -107,13 +112,15 @@ Fields full_name, quantity and price may be skipped.
 
 ### 3. Delete a product
 
-URL: http://host/delete/product1
+URL: http://host/delete/:name
+
+`curl -XDELETE http://localhost:12345/delete/product1`
 
 ### Error reporting for an admin-side:
 
 ```json
 {
-    "error": true,
+    "error_code": number,
     "error_text": "Error description"
 }
 ```
