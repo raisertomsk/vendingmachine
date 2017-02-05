@@ -67,7 +67,7 @@ Response OK:
 ```
 change can be omitted
 
-Response wrong quantity:
+Response with error:
 
 ```json
 {
@@ -83,7 +83,8 @@ Response wrong quantity:
 
 URL: http://host/add/:name
 
-`curl -XPUT http://localhost:12345/add/product1`
+`curl -XPUT http://localhost:12345/add/product1
+-d {"title": "Product 123", "quantity": 10, "price": 20}`
 
 ```json
 {
@@ -99,7 +100,8 @@ Fields quantity and price may be omitted.
 
 URL: http://host/update/:name
 
-`curl -XPOST http://localhost:12345/update/product1`
+`curl -XPOST http://localhost:12345/update/product1
+-d {"title": "Product 123", "quantity": 10, "price": 20}`
 
 ```json
 {
