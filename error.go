@@ -9,6 +9,7 @@ type Error struct {
 	ErrorCode int     `json:"error_code"`
 	ErrorText string  `json:"error_text,omitempty"`
 	CashBack  float64 `json:"cash_back,omitempty"`
+	Change    float64 `json:"change,omitempty"`
 }
 
 const (
