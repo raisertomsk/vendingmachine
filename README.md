@@ -76,7 +76,7 @@ Response wrong quantity:
 
 ## The admin-side algorithm:
 
-1. Add a product
+### 1. Add a product
 
 URL: http://host/add
 
@@ -91,7 +91,7 @@ URL: http://host/add
 
 Fields quantity and price may be skipped.
 
-2. Update a product
+### 2. Update a product
 
 URL: http://host/update
 
@@ -105,11 +105,11 @@ URL: http://host/update
 ```
 Fields full_name, quantity and price may be skipped.
 
-3. Delete a product
+### 3. Delete a product
 
 URL: http://host/delete/product1
 
-Error reporting for an admin-side:
+### Error reporting for an admin-side:
 
 ```json
 {
